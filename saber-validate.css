@@ -24,3 +24,7 @@
 .validation-group.invalid input {
     border: 1px solid #dc3545;
 }
+
+.validation-group.valid input {
+    border: 1px solid #28a745;
+}

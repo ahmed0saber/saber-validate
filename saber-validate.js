@@ -37,6 +37,7 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
   });
 
   if (errors.length === 0) {
+    validationGroup.classList.add("valid");
     validationGroup.classList.remove("invalid");
     validationGroup.querySelector(".error").textContent = "";
     return;
@@ -48,6 +49,7 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
     window.alert(errors.join(", "));
   } else if (options.method === "field") {
     validationGroup.classList.add("invalid");
+    validationGroup.classList.remove("valid");
     validationGroup.querySelector(".error").textContent = errors.join(", ");
   }
 };
