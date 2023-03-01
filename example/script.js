@@ -12,4 +12,7 @@ const validateEmailAddress = () => {
     const emailInput = document.querySelector(".email-input")
     emailInput.checkValidation(emailValidationRules, emailValidationOptions)
 }
-validateEmailAddress()
+
+document.querySelector(".register-form").addEventListener("submit", () => {
+    validateEmailAddress()
+})
