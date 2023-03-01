@@ -26,15 +26,18 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
   const validationGroup = this.closest(".validation-group");
   const errors = [];
 
-  rules.forEach((rule) => {
-    const ruleName = rule[0];
-    const ruleError = rule[1];
+  for (let i = 0; i < rules.length; i++) {
+    const ruleName = rules[i][0];
+    const ruleError = rules[i][1];
 
     const isRuleInvalid = allValidationRules[ruleName](currentInput);
     if (isRuleInvalid) {
       errors.push(ruleError);
+      if (options.block === true) {
+        break;
+      }
     }
-  });
+  };
 
   if (errors.length === 0) {
     validationGroup.classList.add("valid");
