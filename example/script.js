@@ -8,11 +8,14 @@ const emailValidationOptions = {
     block: true // block after the first error (don't show all errors, just the first one)
 }
 
+const emailInput = document.querySelector(".email-input")
+const registerForm = document.querySelector(".register-form")
+
 const validateEmailAddress = () => {
-    const emailInput = document.querySelector(".email-input")
     emailInput.checkValidation(emailValidationRules, emailValidationOptions)
 }
 
-document.querySelector(".register-form").addEventListener("submit", () => {
+emailInput.addEventListener("keyup", validateEmailAddress)
+registerForm.addEventListener("submit", () => {
     validateEmailAddress()
 })
