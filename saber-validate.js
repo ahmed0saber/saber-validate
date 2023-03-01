@@ -23,7 +23,9 @@ const allValidationRules = {
 
 HTMLInputElement.prototype.checkValidation = function (rules, options) {
   const currentInput = this;
+  const validationGroup = this.closest(".validation-group");
   const errors = [];
+
   rules.forEach((rule) => {
     const ruleName = rule[0];
     const ruleError = rule[1];
@@ -34,5 +36,18 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
     }
   });
 
-  console.log(errors);
+  if (errors.length === 0) {
+    validationGroup.classList.remove("invalid");
+    validationGroup.querySelector(".error").textContent = "";
+    return;
+  }
+
+  if (options.method === "console") {
+    console.log(errors);
+  } else if (options.method === "alert") {
+    window.alert(errors.join(", "));
+  } else if (options.method === "field") {
+    validationGroup.classList.add("invalid");
+    validationGroup.querySelector(".error").textContent = errors.join(", ");
+  }
 };
