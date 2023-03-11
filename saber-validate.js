@@ -1,7 +1,3 @@
-const maxOrMin = "max" || "min";
-const anyNumber = 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9;
-const maxOrMinFunction = /\w{1,}-\d{1,}/;
-
 const allValidationRules = {
   empty: (input) => {
     if (input.value.length === 0) {
