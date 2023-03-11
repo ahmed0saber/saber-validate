@@ -1,3 +1,7 @@
+const maxOrMin = "max" || "min";
+const anyNumber = 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9;
+const maxOrMinFunction = /\w{1,}-\d{1,}/;
+
 const allValidationRules = {
   empty: (input) => {
     if (input.value.length === 0) {
@@ -12,12 +16,18 @@ const allValidationRules = {
     return false;
   },
   invalid_email: (input) => {
-    if (
-      input.value.match(/^[a-z]\w{2,}@\w{2,}\.\w{2,}$/)
-    ) {
+    if (input.value.match(/^[a-z]\w{2,}@\w{2,}\.\w{2,}$/)) {
       return false;
     }
     return true;
+  },
+  min: (input, value) => {
+    if (input.value.length <= value) return true;
+    return false;
+  },
+  max: (input, value) => {
+    if (input.value.length >= value) return true;
+    return false;
   },
 };
 
@@ -31,13 +41,15 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
     const ruleError = rules[i][1];
 
     const isRuleInvalid = allValidationRules[ruleName](currentInput);
+    console.log("im here");
     if (isRuleInvalid) {
       errors.push(ruleError);
+      console.log(errors);
       if (options.block === true) {
         break;
       }
     }
-  };
+  }
 
   if (errors.length === 0) {
     validationGroup.classList.add("valid");
@@ -45,7 +57,6 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
     validationGroup.querySelector(".error").textContent = "";
     return;
   }
-
   if (options.method === "console") {
     console.log(errors);
   } else if (options.method === "alert") {
