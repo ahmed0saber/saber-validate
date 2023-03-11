@@ -39,9 +39,22 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
   for (let i = 0; i < rules.length; i++) {
     const ruleName = rules[i][0];
     const ruleError = rules[i][1];
+    if (ruleName.match(/\w{3,}-\d{1,}$/)) {
+      const [functionName, value] = ruleName.split("-");
+      const isRuleInvalid = allValidationRules[functionName](
+        currentInput,
+        value
+      );
+      if (isRuleInvalid) {
+        errors.push(ruleError);
+        if (options.block === true) {
+          break;
+        }
+      }
+      continue;
+    }
 
     const isRuleInvalid = allValidationRules[ruleName](currentInput);
-    console.log("im here");
     if (isRuleInvalid) {
       errors.push(ruleError);
       console.log(errors);
