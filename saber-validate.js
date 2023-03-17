@@ -17,12 +17,12 @@ const allValidationRules = {
     }
     return true;
   },
-  min: (input, value) => {
-    if (input.value.length <= value) return true;
+  min: (input, length) => {
+    if (input.value.length < length) return true;
     return false;
   },
-  max: (input, value) => {
-    if (input.value.length >= value) return true;
+  max: (input, length) => {
+    if (input.value.length > length) return true;
     return false;
   },
 };
@@ -35,7 +35,7 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
   for (let i = 0; i < rules.length; i++) {
     const ruleName = rules[i][0];
     const ruleError = rules[i][1];
-    if (ruleName.match(/\w{3,}-\d{1,}$/)) {
+    if (ruleName.match(/^\w{3,}-\d{1,}$/)) {
       const [functionName, value] = ruleName.split("-");
       const isRuleInvalid = allValidationRules[functionName](
         currentInput,
@@ -53,7 +53,6 @@ HTMLInputElement.prototype.checkValidation = function (rules, options) {
     const isRuleInvalid = allValidationRules[ruleName](currentInput);
     if (isRuleInvalid) {
       errors.push(ruleError);
-      console.log(errors);
       if (options.block === true) {
         break;
       }
